@@ -1,4 +1,4 @@
-# Version - 0.1.3b
+# Version - 0.1.3c
 
 # Фичи:
 # + Пройденое расстояние в км
@@ -35,6 +35,9 @@
 
 from colorama import Fore, Back, Style
 import math
+import time
+
+start_time = time.time()
 
 
 # Список количества шагов по дням + основные переменные, которые вычисляются
@@ -212,3 +215,5 @@ print(f"По статистике: {len(steps_more_10k)} из {str(len(STEPS))} 
 
 print(Fore.CYAN + "\n==============================================="+ Style.RESET_ALL)
 
+
+#print("--- %s seconds ---" % (time.time() - start_time))
