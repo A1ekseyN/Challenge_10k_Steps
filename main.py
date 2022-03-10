@@ -1,4 +1,4 @@
-# Version - 0.1.3a
+# Version - 0.1.3b
 
 # Фичи:
 # + Пройденое расстояние в км
@@ -169,6 +169,11 @@ if distance_km_sum >= 1123:
     travel_predict_next_city_days = math.ceil(travel_next_city_distance_km / distance_km_average)
 if distance_km_sum >= 1388:
     travel_city = "Житомир => Ровно => Львов => Краковец => Краков => Dolny Kubin => Братислава => Грац (Австрия)"
+    travel_next_city_distance_km = round(1724 - (distance_km_sum), 2)
+    travel_next_city = "Njivice, Krk"
+    travel_predict_next_city_days = math.ceil(travel_next_city_distance_km / distance_km_average)
+if distance_km_sum >= 1724:
+    travel_city = "Житомир => Львов => Краковец => Краков => Dolny Kubin => Братислава => Грац (Австрия) => Njivice, Krk"
 
 
 # Вычисление количества шагов до следующего города
