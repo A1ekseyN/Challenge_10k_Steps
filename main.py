@@ -1,4 +1,4 @@
-# Version - 0.1.2a
+# Version - 0.1.3a
 
 # Фичи:
 # + Пройденое расстояние в км
@@ -16,6 +16,7 @@
 # + Добавлена статистика по количеству сожжённых кг жира, и статистика по эквиваленту Big Mac
 # + Изменено отображение общего кол-ва шагов
 # + Добавлен показатель общего запаса шагов
+# + Добавлено отображение кол-ва дней в которые пройдено более 10к шагов, и пересчет в %.
 
 # В среднем kcal в день. Пока не понятно или это вообще стоит считать.
 
@@ -71,6 +72,16 @@ challenge_row = None     # Переменная для стрелочек вни
 # Формула для расчёта запаса шагов до среднего значения в 10к
 stock_steps_to_10k_per_day = ((steps_average - 10000) * len(STEPS))
 #stock_days_steps_to_10k_per_day = (stock_steps_to_10k_per_day / 10000) # Формула расчёта количества дней в запасе.
+
+# Цикл подсчёта количества дней, где шагов более 10к за день.
+steps_more_10k = STEPS[:]
+steps_more_10k.sort()
+
+for steps_without_smaller_10k_cycle in steps_more_10k:
+    if steps_more_10k[0] <= 10000:
+        del steps_more_10k[0]
+
+percent_steps_more_10k = ((len(steps_more_10k) / len(STEPS)) * 100) # Считает % дней, в которых пройдено более 10к шагов на протяжении дня
 
 # Переменные для городов, которые высчитываются из общего пройденого расстояния в км:
 travel_city = None      # Переменная для постройки пройденных городов
@@ -191,6 +202,8 @@ print(f"\nНа ходьбу затрачено: {Fore.CYAN}{kcal_sum:,.0f}{Style
 print(f"Эквивалент: {Fore.CYAN}{kcal_to_fat}{Style.RESET_ALL} кг жира, {Fore.CYAN}{kwt_sum}{Style.RESET_ALL} кВт, {Fore.CYAN}{petrol_economy_liter}{Style.RESET_ALL} л бензина, или {Fore.CYAN}{big_mac_used}{Style.RESET_ALL} Big Mac.")
 
 print(f"\nЗа вчера пройдено {challenge_last_day} 10к шагов.")
-print(f"Прохожу в среднем более 10к шагов в день, на протяжении {str(len(STEPS))}.")
+print(f"По статистике: {len(steps_more_10k)} из {str(len(STEPS))} дней ({(round(percent_steps_more_10k, 1))} %), за которые пройдено более 10к на протяжении дня.")
 
-print(Fore.CYAN + "==============================================="+ Style.RESET_ALL)
+
+print(Fore.CYAN + "\n==============================================="+ Style.RESET_ALL)
+
