@@ -1,4 +1,4 @@
-# Version - 0.1.4a
+# Version - 0.1.5a
 
 # Фичи:
 # + Пройденое расстояние в км
@@ -112,20 +112,31 @@ kcal_to_fat = (round((kcal_sum / 9) / 1000, 2)) # Расчёт потречен�
 # Начало Challenge - 26.08.2021 (Чт).
 
 day_monday = STEPS[slice(4, None, 7)]
-day_monday_avarage = int((sum(day_monday)) / (len(day_monday)))
+day_monday_average = int((sum(day_monday)) / (len(day_monday)))
 day_tuesday = STEPS[slice(5, None, 7)]
-day_tuesday_avarage = int((sum(day_tuesday)) / (len(day_tuesday)))
+day_tuesday_average = int((sum(day_tuesday)) / (len(day_tuesday)))
 day_wednesday = STEPS[slice(6, None, 7)]
-day_wednesday_avarage = int((sum(day_wednesday)) / (len(day_wednesday)))
+day_wednesday_average = int((sum(day_wednesday)) / (len(day_wednesday)))
 day_thursday = STEPS[slice(0, None, 7)]
-day_thursday_avarage = int((sum(day_thursday)) / (len(day_thursday)))
+day_thursday_average = int((sum(day_thursday)) / (len(day_thursday)))
 day_friday = STEPS[slice(1, None, 7)]
-day_friday_avarage = int((sum(day_friday)) / (len(day_friday)))
+day_friday_average = int((sum(day_friday)) / (len(day_friday)))
 day_saturday = STEPS[slice(2, None, 7)]
-day_saturday_avarage = int((sum(day_saturday)) / (len(day_saturday)))
+day_saturday_average = int((sum(day_saturday)) / (len(day_saturday)))
 day_sunday = STEPS[slice(3, None, 7)]
-day_sunday_avarage = int((sum(day_sunday)) / (len(day_sunday)))
+day_sunday_average = int((sum(day_sunday)) / (len(day_sunday)))
 
+# Кусок кода для сортировки по дня недели. Не работает.
+#days_of_week = [
+#        (f"Понедельник:", {day_monday_average}),
+#        (f"Вторник:", {day_thursday_average}),
+#        (f"Среда: {day_wednesday_average}"),
+#        (f"Четверг: {day_thursday_average}"),
+#        (f"Пятница: {day_friday_average}"),
+#        (f"Суббота: {day_saturday_average}"),
+#        (f"Воскресение: {day_sunday_average}")
+#    ]
+days_of_week_sum = [sum(day_monday), sum(day_tuesday), sum(day_wednesday), sum(day_thursday), sum(day_friday), sum(day_saturday), sum(day_sunday)]
 
 # Проверяет или за последний день пройдено более 10к шагов
 if STEPS[-1] >= 10000:
@@ -221,7 +232,7 @@ print(Fore.CYAN + "===============================================" + Style.RESE
 
 print(f"Всего за {str(len(STEPS))} дня пройдено - {Fore.GREEN}{steps_sum:,.0f}{Style.RESET_ALL} шагов. (Вчера: + {Fore.MAGENTA}{str(STEPS[-1])}{Style.RESET_ALL}) ({challenge_average}{str(percentage_difference_round)} %{Style.RESET_ALL}) {challenge_row} :: (Min: {str(steps_min)} / Max: {str(steps_max)})")
 
-print(f"В среднем в день: {Fore.GREEN}{str(steps_average)}{Style.RESET_ALL} шагов. (Запас {stock_steps_to_10k_per_day} шага).")
+print(f"В среднем в день: {Fore.GREEN}{str(steps_average)}{Style.RESET_ALL} шагов. (Запас {stock_steps_to_10k_per_day} шагов).")
 
 print(f"\nОбщее расстояние: {Fore.CYAN}{str(distance_km_sum)}{Style.RESET_ALL} км (+ {str(distance_day_km)} км)")
 print(f"В среднем: {str(distance_km_average)} км в день.")
@@ -234,14 +245,24 @@ print(f"Эквивалент: {Fore.CYAN}{kcal_to_fat}{Style.RESET_ALL} кг ж�
 print(f"\nЗа вчера пройдено {challenge_last_day} 10к шагов.")
 print(f"По статистике: {len(steps_more_10k)} из {str(len(STEPS))} дней ({(round(percent_steps_more_10k, 1))} %), за которые пройдено более 10к на протяжении дня.")
 
-print(f"\nСтатистика по дням недели:")
-print(f"Понедельник: {sum(day_monday)} av: {day_monday_avarage}")
-print(f"Вторник: {sum(day_tuesday)} av: {day_tuesday_avarage}")
-print(f"Среда: {sum(day_wednesday)} av: {day_wednesday_avarage}")
-print(f"Четверг: {sum(day_thursday)} av: {day_thursday_avarage}")
-print(f"Пятница: {sum(day_friday)} av: {day_friday_avarage}")
-print(f"Суббота: {sum(day_saturday)} av: {day_saturday_avarage}")
-print(f"Воскресение: {sum(day_sunday)} av: {day_sunday_avarage}")
+### Кусок кода, для сортировки по дням недели. Код не работает.
+#print(f"\n-- Статистика по дням недели: --")
+#print(f"1. {(sorted(days_of_week)[0])} шагов в среднем (100%).")
+#print(f"2. {(sorted(days_of_week)[1])} шагов в среднем.")
+#print(f"3. {(sorted(days_of_week)[2])} шагов в среднем.")
+#print(f"4. {(sorted(days_of_week)[3])} шагов в среднем.")
+#print(f"5. {(sorted(days_of_week)[4])} шагов в среднем.")
+#print(f"6. {(sorted(days_of_week)[5])} шагов в среднем.")
+#print(f"7. {(sorted(days_of_week)[6])} шагов в среднем.")
+
+print(f"\n-- Статистика по дням недели: --")
+print(f"1. Понедельник в среднем: {day_monday_average}; (min/max: {min(day_monday)}/{max(day_monday)}).")
+print(f"2. Вторник в среднем: {day_tuesday_average}; (min/max: {min(day_tuesday)}/{max(day_tuesday)}).")
+print(f"3. Среда в среднем: {day_wednesday_average}; (min/max: {min(day_wednesday)}/{max(day_wednesday)}).")
+print(f"4. Четверг в среднем: {day_thursday_average}; (min/max: {min(day_thursday)}/{max(day_thursday)}).")
+print(f"5. Пятница в среднем: {day_friday_average}; (min/max: {min(day_friday)}/{max(day_friday)}).")
+print(f"6. Суббота в среднем: {day_saturday_average}; (min/max: {min(day_saturday)}/{max(day_saturday)}).")
+print(f"7. Воскресение в среднем: {day_sunday_average}; (min/max: {min(day_sunday)}/{max(day_sunday)}).")
 
 
 print(Fore.CYAN + "\n==============================================="+ Style.RESET_ALL)
