@@ -1,4 +1,4 @@
-# Version - 0.1.9b
+# Version - 0.1.20a
 
 # Фичи:
 # + Пройденое расстояние в км
@@ -19,11 +19,9 @@
 # + Добавлено отображение кол-ва дней в которые пройдено более 10к шагов, и пересчет в %.
 # + Добавлена статистика по дням недели.
 # + Отображение количества последних дней, за которые пройдено более 10к шагов.
-
-# В среднем kcal в день. Пока не понятно или это вообще стоит считать.
+# + Добавить отрисовку графиков (Среднее число шагов + средняя медианная по дням)
 
 # Поправить отображения цветов (В Среднем за день), возможно и в других местах. Прописан постоянный цвет, а нужно, что бы цвет менялся в зависимости от выполнения условия или его не выполнения
-# Добавить отрисовку графиков (Среднее число шагов + средняя медианная по дням)
 # Разобраться с окончаниями переменных: "дней", "шагов".
 # Дописать код, который будет менять окончание переменной "дней", "шагов", в зависимости от нужного окончания
 # Статистика по времени прогулок. В MiFit появилась статистика времени по дням. Сколько времени в день длилась прогулка. (Можно использовать вложенные словари)
@@ -283,6 +281,9 @@ elif travel_predict_next_city_days < 5:
 else:
     travel_predict_word_ending_days = "дней"
 
+############################################################
+# Графики и гистограммы
+############################################################
 
 def steps_graph():
     # Построение графика по количеству шагов.
@@ -300,9 +301,35 @@ def steps_graph():
 
     # Назначение размера шрифта делений на осях
     ax.tick_params(axis='both', labelsize = 10)
+    ax.set_facecolor('seashell')
 
     plt.show()
 
+
+def bar_days_week_average():
+    # Гистограмма которая показывает статистику по шагам на протяжении недели.
+    plt.style.use('seaborn-pastel')
+    fig, ax = plt.subplots()
+
+    x = ("Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресение")
+    y_day_average = (day_monday_average, day_tuesday_average, day_wednesday_average, day_tuesday_average, day_friday_average, day_saturday_average, day_sunday_average)
+    y_day_median = (day_monday_median, day_tuesday_median, day_wednesday_median, day_thursday_median, day_friday_median, day_saturday_median, day_sunday_median)
+    y_day_max = (max(day_monday), max(day_tuesday), max(day_wednesday), max(day_thursday), max(day_friday), max(day_saturday), max(day_sunday))
+    y_day_min = (min(day_monday), min(day_tuesday), min(day_wednesday), min(day_thursday), min(day_friday), min(day_saturday), min(day_sunday))
+
+    ax.bar(x, y_day_max, color=(0.5, 0.5, 1), edgecolor='black', linewidth=1, label='Max')
+    ax.bar(x, y_day_median, color=(0, 0.7, 0.3), edgecolor='black', linewidth=1, label='Median')
+    ax.bar(x, y_day_average, color=(0.3, 0.9, 0.4), edgecolor='black', linewidth=1, label='Average')
+    ax.bar(x, y_day_min, color=(0.9, 0.3, 0.5), edgecolor='black', linewidth=1, label='Min')
+
+    ax.set_title("График количества шагов по дням недели", fontsize=12)
+    ax.set_xlabel("Дни недели", fontsize=10)
+    ax.set_ylabel("Количество шагов", fontsize=10)
+
+    ax.set_facecolor('seashell')
+    plt.legend()
+
+    plt.show()
 
 ############################################
 # Вывод информции на экран
@@ -338,8 +365,11 @@ for day, value in avarage_steps_days_of_week.items():
 
 
 # Вывод построения графика.
-steps_graph()
-
+steps_graph()   # Построение графика по количеству шагов.
+bar_days_week_average()    # # Гистограмма которая показывает статистику по шагам на протяжении недели.
 
 print(Fore.LIGHTCYAN_EX + "\n==============================================="+ Style.RESET_ALL)
 print(f"Скрипт выполнен за: {time.time() - start_time:,.2f} секунды.")
+
+
+
