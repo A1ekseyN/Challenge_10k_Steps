@@ -38,11 +38,9 @@ from colorama import Fore, Back, Style
 import math
 import time
 import statistics
-
 import matplotlib.pyplot as plt
 
 start_time = time.time()
-
 
 # Список количества шагов по дням + основные переменные, которые вычисляются
 # 30-й день - 24.09.2021
@@ -123,29 +121,6 @@ for day in STEPS:
     days.append(int(day))
     days_average_steps.append(int(sum(days) / len(days)))
     days_median_steps.append(int(statistics.median(days)))
-
-
-#def steps_average_for_days(days = [], days_average_steps = [], days_median_steps = []):
-    ## Подсчет среднего значения шагов по дням.
-    ##days = []
-    ##days_average_steps = []
-    ##days_median_steps = []
-#    for day in STEPS:
-#        days.append(int(day))
-#        days_average_steps.append(int(sum(days) / len(days)))
-#        days_median_steps.append(statistics.median(days))
-#    return days, days_average_steps, days_median_steps
-
-
-
-#def steps_median(median=[]):
-#    # Рассчет средней медианной по количеству шагов.
-#    for day in STEPS:
-#        median.append(int(statistics.median(day)))
-#        print(median)
-
-#    return median
-
 
 
 # Срезы данных для подсчёта статистики по конкретным дням недели.
@@ -364,12 +339,10 @@ for day, value in avarage_steps_days_of_week.items():
     print(f"\t- {day.title()}: Min: {Fore.RED}{value['min_day']:,.0f}{Style.RESET_ALL} / Max: {Fore.GREEN}{value['max_day']:,.0f}{Style.RESET_ALL}.")
 
 
-# Вывод построения графика.
+# Вывод построения графиков.
 steps_graph()   # Построение графика по количеству шагов.
 bar_days_week_average()    # # Гистограмма которая показывает статистику по шагам на протяжении недели.
 
 print(Fore.LIGHTCYAN_EX + "\n==============================================="+ Style.RESET_ALL)
 print(f"Скрипт выполнен за: {time.time() - start_time:,.2f} секунды.")
-
-
 
